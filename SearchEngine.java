@@ -13,17 +13,20 @@ class Handler implements URLHandler {
             return String.format("Output:");
         } 
         else if (url.getPath().contains("/add")) {
-            String[] parameters = url.getQuery().split("s=");
-            searchTerms.add(parameters[1]);  
-            return "Added item!";            
+            String[] parameters = url.getQuery().split("=");
+            if (parameters[0].equals("s")) {
+                searchTerms.add(parameters[1]);
+                return String.format("thingy added!");
+            }         
         }
         else if (url.getPath().contains("/search")) {
-            String[] parametersS = url.getQuery().split("s=");
-            if(searchTerms.contains(parametersS[1]))
-                return "contained!";
-            else {
-                return "not found!";
-            }
+            String[] parameters = url.getQuery().split("=");
+            if (parameters[0].equals("s"))
+                if(searchTerms.contains(parameters[1]))
+                    return "contained!";
+                else {
+                    return "not found!";
+                }
         }
         else {
             return "404 Not Found!";
